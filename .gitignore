@@ -1,7 +1,20 @@
 # Default ignored files
-.idea
 /target
-/src/test
-/.gitignore
-/bookStore.iml
+/out
+/classes
+/checkouts
+/.lein-*
+/.env
+*.iml
+.idea
 .DS_Store
+*/target
+.svn
+.project
+.settings
+.classpath
+logs
+/log
+/tmp
+hotspot.log
+/src/test
