@@ -112,7 +112,9 @@
 								</span>
 							</div>
 							<div class="form">
-								<form action="http://localhost:8080/user/registServlet" method="post">
+								<form action="userservlet" method="post">
+									<!--get方法会覆盖?后的参数，所以为了保险起见，一般用隐藏的表单信息提交方法-->
+									<input type="hidden" name="method" value="regist">
 									<label>用户名称：</label>
 									<input class="itxt" type="text" placeholder="请输入用户名"
 										   autocomplete="off" tabindex="1" name="username" id="username" value="<%=request.getParameter("username")==null?"":request.getParameter("username")%>" />
