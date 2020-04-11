@@ -8,6 +8,10 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.sun.servlet.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BaseServlet</servlet-name>
+        <servlet-class>com.sun.servlet.BaseServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>

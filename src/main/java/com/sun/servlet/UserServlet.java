@@ -10,25 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 
 
 /**
+ * 处理所有和用户有关的请求的Servlet implementation class UserServlet
+ * 抽取BaseServlet以后
+ * UserServlet只需编写相应的处理逻辑即可
  * @author sun
  */
-public class UserServlet extends HttpServlet {
+public class UserServlet extends BaseServlet {
     private UserService us=new UserServiceImpl();
 
-    @Override
+/*    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        String method=request.getParameter("method");
-        /* System.out.println(method);
+        *//* System.out.println(method);
         if ("regist".equals(method)){
             regist(request,response);
         }else if ("login".equals(method)){
             login(request,response);
-        }*/
+        }*//*
 
         //由于user的方法可能会累加起来，为避免一层层的if验证，可以通过反射来调用method对应的方法
         try {
@@ -46,7 +48,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
-    }
+    }*/
 
     protected void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
