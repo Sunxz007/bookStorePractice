@@ -1,11 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>尚硅谷会员注册页面</title>
-		<base href="http://localhost:8080/">
-		<link type="text/css" rel="stylesheet" href="static/css/style.css" >
-		<script type="text/javascript" src="/static/script/jquery-1.7.2.js"></script>
+		<%@include file="/include/base.jsp"%>
 		<script type="text/javascript">
 			// 页面加载完成之后
 			$(function () {
@@ -145,10 +144,6 @@
 					</div>
 				</div>
 			</div>
-		<div id="bottom">
-			<span>
-				尚硅谷书城.Copyright &copy;2015
-			</span>
-		</div>
+		<%@include file="/include/bottom.jsp"%>
 	</body>
 </html>

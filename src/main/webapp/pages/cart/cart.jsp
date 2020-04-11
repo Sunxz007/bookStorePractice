@@ -1,22 +1,17 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>购物车</title>
-<base href="http://localhost:8080/">
-<link type="text/css" rel="stylesheet" href="static/css/style.css" >
+	<%@include file="/include/base.jsp"%>
 </head>
 <body>
 	
 	<div id="header">
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
 			<span class="wel_word">购物车</span>
-			<div>
-				<span>欢迎<span class="um_span">韩总</span>光临尚硅谷书城</span>
-				<a href="pages/order/order.html">我的订单</a>
-				<a href="index.html">注销</a>&nbsp;&nbsp;
-				<a href="index.html">返回</a>
-			</div>
+			<%@include file="/include/user-success.jsp"%>
 	</div>
 	
 	<div id="main">
@@ -63,11 +58,7 @@
 		</div>
 	
 	</div>
-	
-	<div id="bottom">
-		<span>
-			尚硅谷书城.Copyright &copy;2015
-		</span>
-	</div>
+
+	<%@include file="/include/bottom.jsp"%>
 </body>
 </html>

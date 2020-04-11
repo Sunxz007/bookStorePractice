@@ -23,11 +23,11 @@ public class LoginServlet extends HttpServlet {
         User user = us.login(new User(null, username, password, null));
         if(user==null){
             //登录失败 返回登录页面
-//            request.getRequestDispatcher("/pages/user/login.html").forward(request,response);
+//            request.getRequestDispatcher("/pages/user/login.jsp").forward(request,response);
             response.setContentType("text/html;charset=utf-8");
             response.getWriter().write("<h1>登录失败<h1>");
         }else {
-            response.sendRedirect(request.getContextPath()+"/pages/user/login_success.html");
+            response.sendRedirect(request.getContextPath()+"/pages/user/login_success.jsp");
         }
     }
 

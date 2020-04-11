@@ -20,9 +20,9 @@ public class RegisterServlet extends HttpServlet {
         boolean res = us.register(new User(null, username, password, email));
         if(res){
             //注册成功
-            response.sendRedirect("/pages/user/regist_success.html");
+            response.sendRedirect("/pages/user/regist_success.jsp");
         }else{
-            request.getRequestDispatcher("/pages/user/regist.html").forward(request,response);
+            request.getRequestDispatcher("/pages/user/regist.jsp").forward(request,response);
         }
     }
 
