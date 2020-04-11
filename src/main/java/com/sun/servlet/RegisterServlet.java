@@ -22,6 +22,8 @@ public class RegisterServlet extends HttpServlet {
             //注册成功
             response.sendRedirect("/pages/user/regist_success.jsp");
         }else{
+            //登录失败，
+            request.setAttribute("msg","注册失败，用户已存在");
             request.getRequestDispatcher("/pages/user/regist.jsp").forward(request,response);
         }
     }

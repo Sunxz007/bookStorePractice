@@ -24,9 +24,10 @@ public class LoginServlet extends HttpServlet {
         if(user==null){
             //登录失败 返回登录页面
 //            request.getRequestDispatcher("/pages/user/login.jsp").forward(request,response);
-            response.setContentType("text/html;charset=utf-8");
-            response.getWriter().write("<h1>登录失败<h1>");
+            request.setAttribute("msg","用户名密码不匹配");
+            request.getRequestDispatcher("/pages/user/login.jsp").forward(request,response);
         }else {
+            request.setAttribute("msg","用户名登录成功");
             response.sendRedirect(request.getContextPath()+"/pages/user/login_success.jsp");
         }
     }
