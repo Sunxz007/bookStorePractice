@@ -3,6 +3,7 @@ package com.sun.servlet;
 import com.sun.bean.User;
 import com.sun.service.UserService;
 import com.sun.service.impl.UserServiceImpl;
+import com.sun.utils.WebUtils;
 
 import javax.servlet.ServletException;
 
@@ -22,7 +23,10 @@ import java.io.IOException;
 public class UserServlet extends BaseServlet {
     private UserService us=new UserServiceImpl();
 
-/*    @Override
+    public UserServlet() {
+    }
+
+    /*    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        String method=request.getParameter("method");
         *//* System.out.println(method);
@@ -51,9 +55,8 @@ public class UserServlet extends BaseServlet {
     }*/
 
     protected void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        User user = us.login(new User(null, username, password, null));
+        User userBean = WebUtils.param2bean2(request,new User());
+        User user = us.login(userBean);
         if(user==null){
             //登录失败 返回登录页面
             request.setAttribute("msg","用户名密码不匹配");
@@ -63,11 +66,10 @@ public class UserServlet extends BaseServlet {
             response.sendRedirect(request.getContextPath()+"/pages/user/login_success.jsp");
         }
     }
+
     protected void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        boolean res = us.register(new User(null, username, password, email));
+        User user = WebUtils.param2bean2(request,new User());
+        boolean res = us.register(user);
         if(res){
             //注册成功
             response.sendRedirect("/pages/user/regist_success.jsp");
@@ -77,5 +79,4 @@ public class UserServlet extends BaseServlet {
             request.getRequestDispatcher("/pages/user/regist.jsp").forward(request,response);
         }
     }
-
 }
