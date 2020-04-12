@@ -59,7 +59,7 @@ public class BaseDao<T> {
      * 获取结果对象的集合
      * @return List<T>
      */
-    public List<T> getBeanList(String sql ,Object params){
+    public List<T> getBeanList(String sql ,Object ...params){
         Connection connection=JdbcUtils.getConnection();
         List<T> list=new ArrayList<>();
         try {
