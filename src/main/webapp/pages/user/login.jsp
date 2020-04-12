@@ -48,7 +48,8 @@
 							<div class="msg_cont">
 								<b></b>
 								<span class="errorMsg">
-									<%=request.getAttribute("msg")==null?"请输入用户名密码":request.getAttribute("msg")%>
+									${msg==null ? "请输入用户名密码" : msg}
+<%--									<%=request.getAttribute("msg")==null?"请输入用户名密码":request.getAttribute("msg")%>--%>
 								</span>
 
 							</div>
@@ -57,7 +58,7 @@
 									<!--get方法会覆盖?后的参数，所以为了保险起见，一般用隐藏的表单信息提交方法-->
 									<input type="hidden" name="method" value="login">
 									<label>用户名称：</label>
-									<input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" value="<%=request.getParameter("username")==null?"":request.getParameter("username")%>" id="username"/>
+									<input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" value="${param.username}" id="username"/>
 									<br />
 									<br />
 									<label>用户密码：</label>
