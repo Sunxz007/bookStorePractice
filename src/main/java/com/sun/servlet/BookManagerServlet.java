@@ -1,6 +1,7 @@
 package com.sun.servlet;
 
 import com.sun.bean.Book;
+import com.sun.bean.Page;
 import com.sun.service.BookService;
 import com.sun.service.impl.BookServiceImpl;
 import com.sun.utils.WebUtils;
@@ -25,6 +26,16 @@ public class BookManagerServlet extends BaseServlet {
         super();
     }
 
+    protected void page(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+        //用户点击图书管理，显示部分数据，页码通过前台传入默认为第一页
+        String pn=request.getParameter("pn");
+        String pz=request.getParameter("pz");
+
+        Page<Book> page = bs.getPage(pn, pz);
+
+        request.setAttribute("page",page);
+        request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request,response);
+    }
     /**
      * 获取图书列表请求
      * @param request request请求
@@ -53,7 +64,7 @@ public class BookManagerServlet extends BaseServlet {
         //将图书信息保存到数据库
         boolean b = bs.add(book);
             //保存成功，返回列表
-            response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=list");
+            response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=page");
     }
 
     /**
@@ -63,10 +74,13 @@ public class BookManagerServlet extends BaseServlet {
      * @throws IOException
      */
     protected void delete(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        //获取referer信息，得到请求来源的地址信息,在删除后任然留在当前页数
+        String path=request.getHeader("Referer");
         Book book= WebUtils.param2bean2(request,new Book());
         System.out.println(book);
         boolean b=bs.delete(book);
-        response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=list");
+        response.sendRedirect(path);
     }
 
     /**
@@ -77,6 +91,9 @@ public class BookManagerServlet extends BaseServlet {
      * @throws IOException
      */
     protected void getBook(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        String pn=request.getParameter("pn");
+        String pz=request.getParameter("pz");
+        System.out.println("pn="+pn+"pz="+pz);
         Book book =WebUtils.param2bean2(request,new Book());
         Book b=bs.get(book);
         request.setAttribute("book",b);
@@ -91,17 +108,20 @@ public class BookManagerServlet extends BaseServlet {
      * @throws IOException
      */
     protected void update(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String pn=request.getParameter("pn");
+        String pz=request.getParameter("pz");
         //由于添加和修改操作，封装的book id有差别，所以可以直接判断id是否为0来判断是否为修改
         Book book= WebUtils.param2bean2(request,new Book());
 
-        System.out.println(book);
         if(book.getId()==0){
             //添加图书
             bs.add(book);
+            //如果是添加图书，要跳转到最后一页
+            pn=request.getParameter("totalPage");
         }else{
             //修改图书
              bs.update(book);
         }
-        response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=list");
+        response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=page&pn="+pn+"&pz="+pz);
     }
 }

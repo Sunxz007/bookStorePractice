@@ -31,6 +31,10 @@
 			<form action="admin/BookManagerServlet">
 				<input name="method" value="update" type="hidden"/>
 				<input name="id" value="${book.id}" type="hidden"/>
+				<!--带上页码信息-->
+				<input name="pn" value="${param.pn}" type="hidden"/>
+				<input name="pz" value="${param.pz}" type="hidden"/>
+				<input name="totalPage" value="${param.totalPage}" type="hidden"/>
 				<table>
 					<tr>
 						<td>名称</td>

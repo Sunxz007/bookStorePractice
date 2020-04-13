@@ -45,4 +45,19 @@ public interface BookDao {
      */
     public boolean updateBook(Book book);
 
+    /**
+     * 分页查询图书的方法
+     * @param index 开始索引
+     * @param pageSize 每页的大小
+     * @return 返回book对象合集
+     */
+    public List<Book> getPageList(int index,int pageSize);
+
+    /**
+     *
+     * 获取书籍的总数
+     * @return int 总数
+     */
+    public int getTotalCount();
+
 }

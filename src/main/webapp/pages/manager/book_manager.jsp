@@ -36,15 +36,16 @@
 				<td colspan="2">操作</td>
 			</tr>
 
-				<c:forEach items="${requestScope.list}" var="book">
+				<c:forEach items="${requestScope.page.pageData}" var="book">
 					<tr>
 						<td class="title">${book.title}</td>
 						<td class="price">${book.price}</td>
 						<td class="author">${book.author}</td>
 						<td class="sales">${book.sales}</td>
 						<td class="stock">${book.stock}</td>
-						<td><a href="/admin/BookManagerServlet?method=getBook&id=${book.id}">修改</a></td>
-						<td><a class="bookDel" href="/admin/BookManagerServlet?m=delete&id=${book.id}">删除</a></td>
+						<!--带上页码信息-->
+						<td><a href="/admin/BookManagerServlet?method=getBook&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">修改</a></td>
+						<td><a class="bookDel" href="/admin/BookManagerServlet?method=delete&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">删除</a></td>
 					</tr>
 				</c:forEach>
 			<tr>
@@ -54,9 +55,11 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><a href="/pages/manager/book_edit.jsp?method=add">添加图书</a></td>
+				<!--带上总页信息和页码信息给编辑页，帮助跳转-->
+				<td><a href="/pages/manager/book_edit.jsp?method=add&totalPage=${requestScope.page.totalPage}&pz=${requestScope.page.pageSize}">添加图书</a></td>
 			</tr>	
 		</table>
+		<jsp:include page="/include/page-nav.jsp"></jsp:include>
 	</div>
 
 	<%@include file="/include/bottom.jsp"%>

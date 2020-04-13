@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div>
-    <a href="admin/BookManagerServlet?method=list">图书管理</a>
+    <a href="admin/BookManagerServlet?method=page">图书管理</a>
     <a href="pages/manager/order_manager.jsp?method=list">订单管理</a>
     <a href="index.jsp">返回商城</a>
 </div>

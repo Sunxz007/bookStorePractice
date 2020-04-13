@@ -4,6 +4,7 @@ import com.sun.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -89,4 +90,24 @@ public class BaseDao<T> {
         return count;
     }
 
+    /**
+     * 查询单个值
+     * @param sql SQL语句
+     * @param params 参数值
+     * @return 返回单个值
+     */
+    public Object getSingleValue(String sql ,Object ...params){
+
+        Connection connection= null;
+        Object query= null;
+        try {
+            connection = JdbcUtils.getConnection();
+            query = runner.query(connection,sql,new ScalarHandler(),params);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtils.releaseConnection(connection);
+        }
+        return query;
+    }
 }

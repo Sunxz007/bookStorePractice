@@ -1,6 +1,7 @@
 package com.sun.service.impl;
 
 import com.sun.bean.Book;
+import com.sun.bean.Page;
 import com.sun.dao.BookDao;
 import com.sun.dao.impl.BookDaoImpl;
 import com.sun.service.BookService;
@@ -66,5 +67,46 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAll() {
         return bd.getAllbook();
+    }
+
+    /**
+     * 获取分页数据
+     *
+     * @param pageNo   前台传入的
+     * @param pageSize 前台传入的每页数量
+     * @return 返回page模型
+     */
+    @Override
+    public Page<Book> getPage(String pageNo, String pageSize) {
+
+        Page<Book> page = new Page<Book>();
+        //1. 将前台传入的数据转型为int
+        //设置默认值，以防转换时报
+        int pn= 1;
+        //获取page类默认的页面大小
+        //设置默认值
+        int pz= page.getPageSize();
+
+        try {
+            pn = pageNo==null ? pn:Integer.parseInt(pageNo);
+            pz = pageSize==null? pz:Integer.parseInt(pageSize);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
+        //2. 设置页面展示数量
+        page.setPageSize(pz);
+        //3. 获取总记录数
+        int totalcount = bd.getTotalCount();
+        //设置总页面数
+        page.setTotalCount(totalcount);
+        //这样可以计算出正确的totalpage
+        page.setPageNo(pn);
+
+        //查询分页数据并封装
+        List<Book> list=bd.getPageList(page.getIndex(),page.getPageSize());
+        page.setPageData(list);
+        return page;
     }
 }

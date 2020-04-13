@@ -1,6 +1,7 @@
 package com.sun.service;
 
 import com.sun.bean.Book;
+import com.sun.bean.Page;
 
 import java.util.List;
 
@@ -41,4 +42,12 @@ public interface BookService {
      * @return 返回一个List<Book>
      */
     public List<Book> getAll();
+
+    /**
+     * 获取分页数据
+     * @param pageNo 前台传入的
+     * @param pageSize 前台传入的每页数量
+     * @return 返回page模型
+     */
+    public Page<Book> getPage(String pageNo,String pageSize);
 }

@@ -74,4 +74,38 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
         int i = update(sql, book.getTitle(), book.getAuthor(), book.getPrice(), book.getSales(), book.getStock(), book.getImgPath(), book.getId());
         return i>0;
     }
+
+    /**
+     * 分页查询图书的方法
+     *
+     * @param index    开始索引
+     * @param pageSize 每页的大小
+     * @return 返回book对象合集
+     */
+    @Override
+    public List<Book> getPageList(int index, int pageSize) {
+
+        String sql ="select id ,title,author,price,sales,stock,img_path as imgPath from bs_book limit ?,?";
+        return getBeanList(sql,index,pageSize);
+    }
+
+    /**
+     * 获取书籍的总数
+     *
+     * @return int 总数
+     */
+    @Override
+    public int getTotalCount() {
+        String sql= "select count(*) from bs_book";
+        Object value = getSingleValue(sql);
+
+        //查询异常返回0
+        int count = 0;
+        try {
+            count = Integer.parseInt(value.toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
