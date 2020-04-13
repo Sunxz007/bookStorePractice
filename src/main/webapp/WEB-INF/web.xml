@@ -11,7 +11,10 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.sun.servlet.UserServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>BookManagerServlet</servlet-name>
+        <servlet-class>com.sun.servlet.BookManagerServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
@@ -19,4 +22,8 @@
         <url-pattern>/userservlet</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>BookManagerServlet</servlet-name>
+        <url-pattern>/admin/BookManagerServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
