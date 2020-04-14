@@ -114,8 +114,12 @@ public class Page<T> {
      * @return int 索引值
      */
     public Integer getIndex() {
-
-        return (getPageNo()-1)*getPageSize();
+        int i=(getPageNo()-1)*getPageSize();
+        //totalpage 可能为0 ，因此设置的pageNo也可能为0，优越index不能为负数，因此加if判断
+        if(i<0){
+            i=0;
+        }
+        return i;
     }
 
     /**
