@@ -8,8 +8,6 @@
 </head>
 <%@include file="/include/base.jsp"%>
 <body>
-	<jsp:forward page="/client/BookClientServlet?method=page">
-
-	</jsp:forward>
+	<jsp:forward page="/client/BookClientServlet?method=page"></jsp:forward>
 </body>
 </html>
