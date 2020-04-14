@@ -1,6 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" %>
 <!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -44,8 +43,8 @@
 						<td class="sales">${book.sales}</td>
 						<td class="stock">${book.stock}</td>
 						<!--带上页码信息-->
-						<td><a href="/admin/BookManagerServlet?method=getBook&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">修改</a></td>
-						<td><a class="bookDel" href="/admin/BookManagerServlet?method=delete&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">删除</a></td>
+						<td><a href="admin/BookManagerServlet?method=getBook&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">修改</a></td>
+						<td><a class="bookDel" href="admin/BookManagerServlet?method=delete&id=${book.id}&pn=${requestScope.page.pageNo}&pz=${requestScope.page.pageSize}">删除</a></td>
 					</tr>
 				</c:forEach>
 			<tr>
@@ -56,10 +55,10 @@
 				<td></td>
 				<td></td>
 				<!--带上总页信息和页码信息给编辑页，帮助跳转-->
-				<td><a href="/pages/manager/book_edit.jsp?method=add&totalPage=${requestScope.page.totalPage}&pz=${requestScope.page.pageSize}">添加图书</a></td>
+				<td><a href="<c:url value="/pages/manager/book_edit.jsp?method=add&totalPage=${requestScope.page.totalPage}&pz=${requestScope.page.pageSize}"/>">添加图书</a></td>
 			</tr>	
 		</table>
-		<jsp:include page="/include/page-nav.jsp"></jsp:include>
+		<%@include file="/include/page-nav.jsp"%>
 	</div>
 
 	<%@include file="/include/bottom.jsp"%>

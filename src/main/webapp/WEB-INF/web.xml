@@ -15,15 +15,23 @@
         <servlet-name>BookManagerServlet</servlet-name>
         <servlet-class>com.sun.servlet.BookManagerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookClientServlet</servlet-name>
+        <servlet-class>com.sun.servlet.BookClientServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/userservlet</url-pattern>
     </servlet-mapping>
-
+    
     <servlet-mapping>
         <servlet-name>BookManagerServlet</servlet-name>
         <url-pattern>/admin/BookManagerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookClientServlet</servlet-name>
+        <url-pattern>/client/BookClientServlet</url-pattern>
     </servlet-mapping>
 </web-app>

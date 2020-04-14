@@ -34,6 +34,8 @@ public class BookManagerServlet extends BaseServlet {
         Page<Book> page = bs.getPage(pn, pz);
 
         request.setAttribute("page",page);
+        //设置一个跳转路径，方便分页审核跳转对应请求
+        request.setAttribute("requestPath","/admin/BookManagerServlet?method=page");
         request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request,response);
     }
     /**
@@ -57,7 +59,7 @@ public class BookManagerServlet extends BaseServlet {
      * @param request request对象
      * @param response response 请求
      */
-    protected void add(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    protected void add(HttpServletRequest request,HttpServletResponse response) throws  IOException {
         //将提交的图书信息封装为一个图书对象
         Book book= WebUtils.param2bean2(request,new Book());
         System.out.println(book);
@@ -104,7 +106,7 @@ public class BookManagerServlet extends BaseServlet {
     /**
      * 修改图书的信息
      * @param request 根据id修改书籍的其他信息
-     * @param response
+     * @param response response 请求
      * @throws IOException
      */
     protected void update(HttpServletRequest request,HttpServletResponse response) throws IOException {
