@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<Book> getPage(String pageNo, String pageSize) {
 
-        Page<Book> page = new Page<Book>();
+        Page<Book> page = new Page<>();
         //1. 将前台传入的数据转型为int
         //设置默认值，以防转换时报
         int pn= 1;
@@ -107,6 +107,47 @@ public class BookServiceImpl implements BookService {
         //查询分页数据并封装
         List<Book> list=bd.getPageList(page.getIndex(),page.getPageSize());
         page.setPageData(list);
+        return page;
+    }
+
+    /**
+     * 更具价格获取对应的book信息
+     *
+     * @param minPrice      最低价，默认为0，不低于0
+     * @param maxPrice      最高价，不低于最低价
+     * @param pageNo    结果起始页
+     * @param pageSize 每页结果大小
+     * @return 在价格区间内的Book对象的list集合
+     */
+    @Override
+    public Page<Book> getPageByPrice(String minPrice, String maxPrice, String pageNo, String pageSize) {
+        //建立page对象封装数据
+        Page<Book> page = new Page<>();
+        //将servlet传入的字符串数据转为对应对象类型
+        double min = 0.0;
+        double max = Double.MAX_VALUE;
+        int pn = 1;
+        int pz = page.getPageSize();
+        try {
+            min = minPrice==null?min:Double.parseDouble(minPrice);
+            max = maxPrice==null ? max:Double.parseDouble(maxPrice);
+            pn = pageNo==null ? pn:Integer.parseInt(pageNo);
+            pz = pageSize==null? pz:Integer.parseInt(pageSize);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        //封装前台传入的页码数据
+
+        page.setPageSize(pz);
+        //获取记录数
+        int count = bd.getCountByPrice(min, max);
+        //封装记录数
+        page.setTotalCount(count);
+        //有了总数就可以验证当前页码是否符合要求
+        page.setPageNo(pn);
+        List<Book> pageByPrice = bd.getPageByPrice(min, max, pn, pz);
+        page.setPageData(pageByPrice);
+
         return page;
     }
 }

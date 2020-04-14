@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>书城首页</title>
-    <link type="text/css" rel="stylesheet" href="static/css/style.css" >
     <%@include file="/include/base.jsp"%>
 </head>
 <body>
@@ -18,9 +17,11 @@
 <div id="main">
     <div id="book">
         <div class="book_cond">
-            <form action="" method="get">
-                <label for="min">价格：</label><input id="min" type="text" name="min" value="">
-                <label for="max">元 - </label><input id="max" type="text" name="max" value=""> 元
+            <form action="client/BookClientServlet?method=getPageByPrice" method="post">
+                <label for="min">价格：</label><input id="min" type="text" name="min" value="${param.min}">
+                <label for="max">元 - </label><input id="max" type="text" name="max" value="${param.max}"> 元
+                <input type="hidden" name="pn" value="${requestScope.page.pageNo}">
+                <input type="hidden" name="pz" value="${requestScope.page.pageSize}">
                 <input type="submit" value="查询" />
             </form>
         </div>

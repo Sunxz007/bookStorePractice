@@ -1,5 +1,6 @@
 package com.sun.servlet;
 
+import com.sun.bean.Book;
 import com.sun.bean.Page;
 import com.sun.service.BookService;
 import com.sun.service.impl.BookServiceImpl;
@@ -23,6 +24,20 @@ public class BookClientServlet extends BaseServlet {
         request.setAttribute("page",page);
         //设置一个跳转路径，方便分页审核跳转对应请求
         request.setAttribute("requestPath","/client/BookClientServlet?method=page");
+        request.getRequestDispatcher("/pages/book/booklist.jsp").forward(request,response);
+    }
+
+    protected void getPageByPrice(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pn=request.getParameter("pn");
+        String pz=request.getParameter("pz");
+        String min = request.getParameter("min");
+        String max = request.getParameter("max");
+        Page<Book> page = bookService.getPageByPrice(min, max, pn, pz);
+        //设置一个跳转路径，方便分页审核跳转对应请求
+        request.setAttribute("requestPath","/client/BookClientServlet?method=getPageByPrice&min="+min+"&max="+max);
+
+        //设置一个跳转路径，方便分页审核跳转对应请求
+        request.setAttribute("page",page);
         request.getRequestDispatcher("/pages/book/booklist.jsp").forward(request,response);
     }
 }

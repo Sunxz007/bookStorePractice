@@ -122,7 +122,7 @@ public class BookManagerServlet extends BaseServlet {
             pn=request.getParameter("totalPage");
         }else{
             //修改图书
-             bs.update(book);
+            boolean update = bs.update(book);
         }
         response.sendRedirect(request.getContextPath()+"/admin/BookManagerServlet?method=page&pn="+pn+"&pz="+pz);
     }

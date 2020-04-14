@@ -13,8 +13,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dao基础查询操作，返回从数据中查询到的具体数据
+ * @author sun
+ * @param <T> 返回的bean类型
+ */
 public class BaseDao<T> {
 
+    /**
+     * commons.dbutil 查询启动对象
+     */
     private QueryRunner runner=new QueryRunner();
 
     /**
@@ -31,17 +39,17 @@ public class BaseDao<T> {
         //获取当前类的父类
         //getGenericSuperclass()用来获取当前类的父类的类型
         //paramterizedType表示带泛型的类型
-        ParameterizedType ParameterizedType=(ParameterizedType)clazz.getGenericSuperclass();
+        ParameterizedType parameterizedType=(ParameterizedType)clazz.getGenericSuperclass();
         //获取具体的泛型类型，getActualTypeArguments()会返回一个Type的数组，代表泛型的类型
-        Type[] types=ParameterizedType.getActualTypeArguments();
+        Type[] types=parameterizedType.getActualTypeArguments();
         //获取具体的泛型类型
-        type=(Class<T>)types[0];
+        type = (Class<T>) types[0];
         System.out.println(type);
     }
 
     /**
      * 获取一个结果对象
-     * @return
+     * @return 返回一个封装了结果对应的泛型对象
      */
     public T getBean(String sql ,Object ...params){
         Connection connection = JdbcUtils.getConnection();
@@ -58,7 +66,7 @@ public class BaseDao<T> {
 
     /**
      * 获取结果对象的集合
-     * @return List<T>
+     * @return 返回一组封装了结果对应的泛型对象
      */
     public List<T> getBeanList(String sql ,Object ...params){
         Connection connection=JdbcUtils.getConnection();

@@ -68,6 +68,10 @@ public class Page<T> {
         return pageNo;
     }
 
+    /**
+     * 设定当前页数，页数不能为小于1，不能大于totalCount
+     * @param pageNo 页数最大不超过最大值
+     */
     public void setPageNo(Integer pageNo) {
         //页码最小为1
         pageNo=pageNo>0?pageNo:1;

@@ -108,4 +108,38 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
         }
         return count;
     }
+
+    /**
+     * 更具价格获取对应的book信息
+     *
+     * @param min      最低价，默认为0，不低于0
+     * @param max      最高价，不低于最低价
+     * @param index    结果起始页
+     * @param pagesize 每页结果大小
+     * @return 在价格区间内的Book对象的list集合
+     */
+    @Override
+    public List<Book> getPageByPrice(double min, double max, int index, int pagesize) {
+        String sql ="select id ,title,author,price,sales,stock,img_path as imgPath from bs_book where price between ? and ? limit ?,?";
+        return getBeanList(sql, min, max, index, pagesize);
+    }
+
+    /**
+     * 根据价格区间获取对应的书籍数量
+     *
+     * @param min 最高价
+     * @param max 最低价
+     * @return 价格区间内的书籍数量
+     */
+    @Override
+    public int getCountByPrice(double min, double max) {
+        String sql="select count(*) from bs_book where price between ? and ?";
+        int i= 0;
+        try {
+            i = Integer.parseInt(getSingleValue(sql,min,max).toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
 }
