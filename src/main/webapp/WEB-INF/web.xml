@@ -24,6 +24,10 @@
         <servlet-name>KaptchaServlet</servlet-name>
         <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.sun.servlet.CartServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
@@ -41,5 +45,9 @@
     <servlet-mapping>
         <servlet-name>KaptchaServlet</servlet-name>
         <url-pattern>/code.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/client/CartServlet</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,13 +1,14 @@
 package com.sun.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 分页模型，泛型为存储页面的单个信息
  * @author sun
  */
-public class Page<T> {
+public class Page<T> implements Serializable {
 
     /**
      * 当前是第几页 通过前台传入

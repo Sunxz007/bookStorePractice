@@ -1,6 +1,8 @@
 package com.sun.bean;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private Integer id;
     /**
      * 书名
