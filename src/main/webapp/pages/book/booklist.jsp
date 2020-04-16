@@ -17,9 +17,11 @@
 <div id="main">
     <div id="book">
         <div class="book_cond">
-            <form action="client/BookClientServlet?method=getPageByPrice" method="post">
+<%--            修改为get方法，方便加入购物车后response重定向到原来的筛选结果中--%>
+            <form action="client/BookClientServlet?" method="get">
                 <label for="min">价格：</label><input id="min" type="text" name="min" value="${param.min}">
                 <label for="max">元 - </label><input id="max" type="text" name="max" value="${param.max}"> 元
+                <input type="hidden" name="method" value="getPageByPrice">
                 <input type="hidden" name="pn" value="${requestScope.page.pageNo}">
                 <input type="hidden" name="pz" value="${requestScope.page.pageSize}">
                 <input type="submit" value="查询" />
