@@ -1,11 +1,14 @@
 package com.sun.bean;
 
 
+import java.io.Serializable;
+
 /**
  * 对应数据库的user表
+ * 为保证服务器重启之后，user信息依旧能够被session读取，要将user信息钝化，因此要实现序列化接口
  * @author sun
  */
-public class User {
+public class User implements Serializable {
     private Integer id;
     private String username;
     private String password;
