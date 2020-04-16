@@ -68,7 +68,7 @@
 					codeText = $.trim(codeText);
 					// alert("去空格后：["+codeText+"]")
 
-					if (codeText == null || codeText == "") {
+					if (codeText == null || codeText === "") {
 						//4 提示用户
 						$("span.errorMsg").text("验证码不能为空！");
 
@@ -80,6 +80,10 @@
 
 				});
 
+				$("img.code").click(function () {
+					//防止浏览器认为是同一资源使用缓存，因此使用随机数参数来防止读取缓存
+					$(this).prop("src","/code.jpg?random=" + Math.random());
+				})
 			});
 
 		</script>
@@ -136,9 +140,8 @@
 										   autocomplete="off" tabindex="1" name="email" id="email" value="${param.email}"/>
 									<br />
 									<br />
-									<label>验证码：</label>
-									<input class="itxt" type="text" style="width: 150px;" id="code"/>
-									<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">
+									<label for="code">验证码：</label><input class="itxt" type="text" style="width: 100px;" id="code"/>
+									<img alt="" class="code" src="/code.jpg" title="看不清，换一张" style="float: right; margin-right: 40px" width="120px" height="40">
 									<br />
 									<br />
 									<input type="submit" value="注册" id="sub_btn" />

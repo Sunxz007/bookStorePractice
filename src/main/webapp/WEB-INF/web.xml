@@ -20,7 +20,10 @@
         <servlet-name>BookClientServlet</servlet-name>
         <servlet-class>com.sun.servlet.BookClientServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
@@ -34,5 +37,9 @@
     <servlet-mapping>
         <servlet-name>BookClientServlet</servlet-name>
         <url-pattern>/client/BookClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <url-pattern>/code.jpg</url-pattern>
     </servlet-mapping>
 </web-app>

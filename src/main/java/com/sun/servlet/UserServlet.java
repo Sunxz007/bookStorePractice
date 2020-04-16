@@ -1,5 +1,6 @@
 package com.sun.servlet;
 
+import com.google.code.kaptcha.Constants;
 import com.sun.bean.User;
 import com.sun.service.UserService;
 import com.sun.service.impl.UserServiceImpl;
@@ -73,6 +74,19 @@ public class UserServlet extends BaseServlet {
     }
 
     protected void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //获取用户输入的验证码
+        String code=request.getParameter("code");
+        //获取session中的验证码，kaptcha在生成图片后会在session中写入验证码的值
+        String sessionCode = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        System.out.println(sessionCode);
+        //验证验证码是否一致
+        if (!sessionCode.equals(code)) {
+            //验证码不同,返回错误信息
+            request.setAttribute("msg","验证码错误");
+
+            request.getRequestDispatcher("/pages/user/regist.jsp").forward(request,response);
+            return;
+        }
         User user = WebUtils.param2bean2(request,new User());
         boolean res = us.register(user);
         if(res){
