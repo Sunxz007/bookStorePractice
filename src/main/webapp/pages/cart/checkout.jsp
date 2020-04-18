@@ -15,14 +15,14 @@
 <body>
 	
 	<div id="header">
-			<img class="logo_img" alt="" src="/static/img/logo.gif" >
+			<img class="logo_img" alt="" src="${pageContext.request.contextPath}/static/img/logo.gif" >
 			<span class="wel_word">结算</span>
 			<%@include file="/include/user-info.jsp"%>
 	</div>
 	
 	<div id="main">
 		
-		<h1>你的订单已结算，订单号为2937474382928484747</h1>
+		<h1>你的订单已结算，订单号为${sessionScope.orderId}</h1>
 		
 	
 	</div>

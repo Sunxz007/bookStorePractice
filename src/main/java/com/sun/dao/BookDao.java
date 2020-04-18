@@ -77,4 +77,12 @@ public interface BookDao {
      * @return 价格区间内的书籍数量
      */
     int getCountByPrice(double min,double max);
+
+    /**
+     * 更新书的数量和库存
+     * @param bookId 书的id
+     * @param stocks 库存信息
+     * @param sales 销量信息
+     */
+    void updateStockAndSales(Integer bookId,Integer stocks,Integer sales);
 }

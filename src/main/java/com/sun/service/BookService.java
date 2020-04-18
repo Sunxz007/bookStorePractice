@@ -60,4 +60,13 @@ public interface BookService {
      * @return 在价格区间内的Book对象的list集合
      */
     Page<Book> getPageByPrice(String min, String max, String pageNo, String pagesize);
+
+    /**
+     * 更新书的数量和库存
+     * @param bookId 书的id
+     * @param stocks 库存信息
+     * @param sales 销量信息
+     */
+    void updateStockAndSales(Integer bookId,Integer stocks,Integer sales);
+
 }

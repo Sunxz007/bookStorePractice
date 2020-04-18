@@ -105,7 +105,7 @@ public class CartServlet extends BaseServlet {
      * @param request request 请求
      * @return session 中的cart对象
      */
-    private Cart getCart(HttpServletRequest request){
+    public static Cart getCart(HttpServletRequest request){
         HttpSession session=request.getSession();
         //从session中取出cart
         Cart cart=(Cart) request.getSession().getAttribute("cart");

@@ -142,4 +142,16 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
         }
         return i;
     }
+
+    /**
+     * 更新书的数量和库存
+     *
+     * @param bookId 书的id
+     * @param stocks 库存信息
+     * @param sales  销量信息
+     */
+    @Override
+    public void updateStockAndSales(Integer bookId, Integer stocks, Integer sales) {
+
+    }
 }

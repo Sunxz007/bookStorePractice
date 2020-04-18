@@ -109,11 +109,11 @@ public class Cart implements Serializable {
         int num=1;
         try {
             id = bookid==null ?id :Integer.parseInt(bookid);
-            num=count==null ? num:Integer.parseInt(count);
+            num= count==null ? num:Integer.parseInt(count);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        num=num==0?1:num;
+        num =num==0?1:num;
         CartItem cartItem=items.get(id);
         cartItem.setCount(num);
     }

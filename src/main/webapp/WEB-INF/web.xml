@@ -28,7 +28,14 @@
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>com.sun.servlet.CartServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>OrderClientServlet</servlet-name>
+        <servlet-class>com.sun.servlet.OrderClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderManagerServlet</servlet-name>
+        <servlet-class>com.sun.servlet.OrderManagerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/userservlet</url-pattern>
@@ -49,5 +56,13 @@
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/client/CartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderClientServlet</servlet-name>
+        <url-pattern>/client/OrderClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderManagerServlet</servlet-name>
+        <url-pattern>/admin/OrderManagerServlet</url-pattern>
     </servlet-mapping>
 </web-app>
