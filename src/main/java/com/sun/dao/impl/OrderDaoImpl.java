@@ -33,7 +33,7 @@ public class OrderDaoImpl extends BaseDao<Order> implements OrderDao {
     @Override
     public int updateStatus(Order order) {
         String sql ="update bs_order set status=? where order_id=?";
-        return update(sql ,order.getOrderId());
+        return update(sql ,order.getStatus(),order.getOrderId());
     }
 
     /**

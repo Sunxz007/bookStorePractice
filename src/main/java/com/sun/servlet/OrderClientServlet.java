@@ -42,6 +42,12 @@ public class OrderClientServlet extends BaseServlet {
         //在request域中存储所有订单
         request.setAttribute("orders",orders);
         request.getRequestDispatcher("/pages/order/order.jsp").forward(request,response);
+    }
 
+    protected void receive(HttpServletRequest request, HttpServletResponse response) throws  IOException{
+        String orderId = request.getParameter("orderId");
+       orderService.updateStatus(orderId,"2");
+
+       response.sendRedirect(request.getHeader("referer") );
     }
 }

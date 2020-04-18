@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8"  pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,32 +17,33 @@
 	<div id="main">
 		<table>
 			<tr>
+				<td>订单编号</td>
 				<td>日期</td>
 				<td>金额</td>
 				<td>详情</td>
 				<td>发货</td>
 				
 			</tr>		
-			<tr>
-				<td>2015.04.23</td>
-				<td>90.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td><a href="#">点击发货</a></td>
-			</tr>	
-			
-			<tr>
-				<td>2015.04.20</td>
-				<td>20.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>已发货</td>
-			</tr>	
-			
-			<tr>
-				<td>2014.01.23</td>
-				<td>190.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>等待收货</td>
-			</tr>		
+			<c:forEach items="${requestScope.orders}" var="order">
+				<tr>
+					<td>${order.orderId}</td>
+					<td>${order.createDate}</td>
+					<td>${order.totalMoney}</td>
+					<td><a href="#">查看详情</a></td>
+					<c:choose>
+						<c:when test="${order.status==0}">
+							<td><a href="${pageContext.request.contextPath}/admin/OrderManagerServlet?method=deliver&orderId=${order.orderId}">点击发货</a></td>
+						</c:when>
+						<c:when test="${order.status==1}">
+							<td>等待收货 </td>
+						</c:when>
+						<c:when test="2">
+							<td>交易完成</td>
+						</c:when>
+					</c:choose>
+				</tr>
+			</c:forEach>
+
 		</table>
 	</div>
 

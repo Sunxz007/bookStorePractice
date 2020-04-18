@@ -48,13 +48,12 @@
 								<td>待发货</td>
 							</c:when>
 							<c:when test="${order.status==1}">
-								<td><a href="#">确认收货</a></td>
+								<td><a href="${pageContext.request.contextPath}/client/OrderClientServlet?method=receive&orderId=${order.orderId}">确认收货</a></td>
 							</c:when>
-							<c:when test="2">
+							<c:when test="${order.status==2}">
 								<td>已完成</td>
 							</c:when>
 						</c:choose>
-						<td>${order.status}</td>
 						<td><a href="#">查看详情</a></td>
 					</tr>
 				</c:forEach>
