@@ -20,9 +20,14 @@ public interface OrderItemDao {
     /**
      * 将数据保存到orderitem
      * @param orderItem 封装了orderitem的数据的
+     */
+    void saveOrderItem(OrderItem orderItem);
+
+    /**
+     * 将数据批量保存到orderitem
+     *
+     * @param orderItems 封装了orderitem的数据的s
      * @return 受影响的行数
      */
-    int saveOrderItem(OrderItem orderItem);
-
-
+    int saveOrderItems(List<OrderItem> orderItems);
 }

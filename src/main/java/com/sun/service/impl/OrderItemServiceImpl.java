@@ -42,9 +42,6 @@ public class OrderItemServiceImpl implements OrderItemService {
      */
     @Override
     public void saveOrederItems(List<OrderItem> orderItems) {
-
-        for (OrderItem item: orderItems){
-            orderItemDao.saveOrderItem(item);
-        }
+        orderItemDao.saveOrderItems(orderItems);
     }
 }

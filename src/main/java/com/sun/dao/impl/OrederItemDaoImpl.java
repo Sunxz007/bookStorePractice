@@ -27,15 +27,30 @@ public class OrederItemDaoImpl extends BaseDao<OrderItem> implements OrderItemDa
      * 将数据保存到orderitem
      *
      * @param orderItem 封装了orderitem的数据的
+     */
+    @Override
+    public void saveOrderItem(OrderItem orderItem) {
+        String sql="insert into bs_order_item(title,count,price,total_price,order_id) values(?,?,?,?,?)";
+        update(sql, orderItem.getTitle(), orderItem.getCount(), orderItem.getPrice(), orderItem.getTotalPrice(), orderItem.getOrderId());
+    }
+
+    /**
+     * 将数据批量保存到orderitem
+     *
+     * @param orderItems 封装了orderitem的数据的s
      * @return 受影响的行数
      */
     @Override
-    public int saveOrderItem(OrderItem orderItem) {
+    public int saveOrderItems(List<OrderItem> orderItems) {
         String sql="insert into bs_order_item(title,count,price,total_price,order_id) values(?,?,?,?,?)";
-        return update(sql,orderItem.getTitle(),orderItem.getCount(),orderItem.getPrice(),orderItem.getTotalPrice(),orderItem.getOrderId());
+        Object[][] objs=new Object[orderItems.size()][];
+        int count=0;
+        for(OrderItem item :orderItems){
+            objs[count]=new Object[]{item.getTitle(),item.getCount(),item.getPrice(),item.getTotalPrice(),item.getOrderId()};
+            count++;
+        }
+        batch(sql,objs);
+        return 1;
     }
-
-
-
 
 }

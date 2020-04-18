@@ -118,4 +118,20 @@ public class BaseDao<T> {
         }
         return query;
     }
+
+    /**
+     * 批量执行sql语句
+     * @param sql sql预处理语句
+     * @param params Object[][] 第一位长度代表sql处理的次数，第二位代表处理的可变参数
+     */
+    public void batch(String sql,Object[][] params){
+        Connection connection=JdbcUtils.getConnection();
+        try {
+            runner.batch(connection,sql,params);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtils.releaseConnection(connection);
+        }
+    }
 }
