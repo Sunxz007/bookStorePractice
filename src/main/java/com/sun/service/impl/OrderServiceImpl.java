@@ -52,17 +52,21 @@ public class OrderServiceImpl implements OrderService {
 
         //5修改书籍库存
         for(CartItem cartItem:allItems){
-            //获取详细信息
+            //获取详细信息，为保证及时性，需从数据库中提取信息
             Book book = cartItem.getBook();
+            //从数据库获取图书信息
+            Book book1=bookService.get(book);
             //获取购买的数量
             int count=cartItem.getCount();
             //修改数量
-            book.setStock(book.getStock()-count);
-            book.setSales(book.getSales()+count);
+            book1.setStock(book1.getStock()-count);
+            book1.setSales(book1.getSales()+count);
 
             //更新图书信息
-            bookService.update(book);
+            bookService.update(book1);
         }
+        //清空购物车信息
+        cart.clear();
 
         return orderId;
     }
