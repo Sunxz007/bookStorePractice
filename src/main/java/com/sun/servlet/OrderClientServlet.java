@@ -1,6 +1,6 @@
 package com.sun.servlet;
 
-import com.mysql.cj.Session;
+
 import com.sun.bean.Order;
 import com.sun.bean.User;
 import com.sun.service.OrderService;
@@ -8,32 +8,29 @@ import com.sun.service.impl.OrderServiceImpl;
 import com.sun.utils.WebUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * @author sun
+ */
 public class OrderClientServlet extends BaseServlet {
     OrderService orderService=new OrderServiceImpl();
 
-    protected void checkout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void checkout(HttpServletRequest request, HttpServletResponse response) throws  IOException {
         //验证用户是否登录
         User loginUser= WebUtils.getLoginUser(request);
-        //如果存在user做说明登录成功
-        if(loginUser!=null){
-            //取出存储在session中的购物车内的信息并，进行结算
-            String orderId = orderService.checkout(CartServlet.getCart(request), loginUser);
-            request.getSession().setAttribute("orderId",orderId);
-            response.sendRedirect(request.getContextPath()+"/pages/cart/checkout.jsp");
-        }else{
-            //未登录跳转到登录界面，并提示登录
-            request.setAttribute("msg" ,"结算购物车需登录后操作");
-            request.getRequestDispatcher("/pages/user/login.jsp").forward(request,response);
-        }
+
+        //取出存储在session中的购物车内的信息并，进行结算
+        String orderId = orderService.checkout(CartServlet.getCart(request), loginUser);
+        request.getSession().setAttribute("orderId",orderId);
+        response.sendRedirect(request.getContextPath()+"/pages/cart/checkout.jsp");
+
     }
 
     protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
