@@ -10,7 +10,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,13 +52,11 @@ public class BaseDao<T> {
      */
     public T getBean(String sql ,Object ...params){
         Connection connection = JdbcUtils.getConnection();
-        T query=null;
+        T query;
         try {
             query=runner.query(connection,sql,new BeanHandler<>(type),params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtils.releaseConnection(connection);
+            throw new RuntimeException("查询发生异常");
         }
         return query;
     }
@@ -70,13 +67,11 @@ public class BaseDao<T> {
      */
     public List<T> getBeanList(String sql ,Object ...params){
         Connection connection=JdbcUtils.getConnection();
-        List<T> list=new ArrayList<>();
+        List<T> list;
         try {
             list=runner.query(connection,sql,new BeanListHandler<>(type),params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtils.releaseConnection(connection);
+            throw new RuntimeException("批量查询发生异常");
         }
         return list;
     }
@@ -87,13 +82,11 @@ public class BaseDao<T> {
      */
     public int update(String sql,Object ...params){
         Connection connection=JdbcUtils.getConnection();
-        int count=0;
+        int count;
         try {
             count=runner.update(connection,sql,params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JdbcUtils.releaseConnection(connection);
+            throw new RuntimeException("更新发生异常");
         }
         return count;
     }
@@ -106,15 +99,13 @@ public class BaseDao<T> {
      */
     public Object getSingleValue(String sql ,Object ...params){
 
-        Connection connection= null;
-        Object query= null;
+        Connection connection;
+        Object query;
         try {
             connection = JdbcUtils.getConnection();
             query = runner.query(connection,sql,new ScalarHandler(),params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtils.releaseConnection(connection);
+            throw new RuntimeException("查询值发生异常");
         }
         return query;
     }
@@ -129,9 +120,7 @@ public class BaseDao<T> {
         try {
             runner.batch(connection,sql,params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtils.releaseConnection(connection);
+            throw new RuntimeException("批量更新发生异常");
         }
     }
 }

@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -28,32 +30,52 @@ public class JdbcUtils {
             e.printStackTrace();
         }
     }
+    /**
+     * 存储数据库连接的各个线程信息，保证每一次请求只有一个线程
+     */
+    private static Map<Long,Connection>conns=new HashMap<>();
 
     /**
      * 获取数据库连接实例
      * @return Connection
      */
     public static Connection getConnection() {
-        Connection connection=null;
-        try {
-            connection= ds.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        long id=Thread.currentThread().getId();
+        System.out.println("JDBC当前连接线程："+id);
+        //获取当前线程的连接
+        Connection connection=conns.get(Thread.currentThread().getId());
+
+        if (connection==null) {
+            //如果当前线程没有connection，则创建一个
+            try {
+                connection= ds.getConnection();
+                connection.setAutoCommit(false);
+                //连接存储到map中，保证一次连接的一个线程只有一个connection
+                conns.put(id,connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return connection;
     }
 
     /**
      * 释放数据库连接
-     * @param connection 数据库连接类实例
      */
-    public static void releaseConnection(Connection connection){
+    public static void releaseConnection(){
+        //获取当前线程的连接
+        Connection connection=getConnection();
         try {
             if(connection!=null){
                 connection.close();
+                Long id=Thread.currentThread().getId();
+                //删除当前线程信息
+                conns.remove(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

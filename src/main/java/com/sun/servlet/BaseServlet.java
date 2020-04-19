@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  */
 public class BaseServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //在获取数据之前设置字符编码为utf-8
         request.setCharacterEncoding("utf-8");
         String method=request.getParameter("method");
@@ -33,13 +33,15 @@ public class BaseServlet extends HttpServlet {
             method1.setAccessible(true);
             //调用方法
             method1.invoke(this,request,response);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            //向上抛出异常
+            throw new RuntimeException("BaseServlet异常");
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException {
         doPost(request,response);
     }
 }
