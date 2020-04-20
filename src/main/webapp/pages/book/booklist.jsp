@@ -8,6 +8,19 @@
     <title>书城首页</title>
     <%@include file="/include/base.jsp"%>
 </head>
+<script>
+    $(function () {
+        //加购按钮
+        $(".addCartBtn").click(function () {
+            const id=$(this).attr("updateId");
+            $.getJSON("client/CartServlet?method=add&id="+id,function (data) {
+
+                $(".totalCountKey").text("您的购物车中有 "+data.totalCount+" 件商品");
+                $("#titleTip").text("您刚刚将【"+data.title+"】加入到了购物车中")
+            })
+        })
+    })
+</script>
 <body>
 <div id="header">
     <img class="logo_img" alt="" src="static/img/logo.gif" >
@@ -28,16 +41,12 @@
             </form>
         </div>
         <div style="text-align: center">
-            <span>您的购物车中有<c:out value="${sessionScope.cart.totalCount}" default="0" /> 件商品</span>
-            <c:if test="${!empty sessionScope.bookTitle}">
+            <span class="totalCountKey">您的购物车中有<c:out value="${sessionScope.cart.totalCount}" default="0" /> 件商品</span>
                 <div>
-                    您刚刚将<span style="color: red">${sessionScope.bookTitle}</span>加入到了购物车中
+                    <span id="titleTip"></span>
                 </div>
-                <c:remove var="bookTitle" scope="session" />
-            </c:if>
-            <c:if test="${empty sessionScope.bookTitle}">
-                <span></span>
-            </c:if>
+
+
 
 
         </div>
@@ -68,7 +77,8 @@
                         <span class="sp2">${book.stock}</span>
                     </div>
                     <div class="book_add">
-                        <a href="client/CartServlet?method=add&id=${book.id}" >加入购物车</a>
+                        <button  updateId="${book.id}" class="addCartBtn">加入购物车</button>
+                        <%--<a href="client/CartServlet?method=add&id=${book.id}" >加入购物车</a>--%>
                     </div>
                 </div>
             </div>
