@@ -18,4 +18,16 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
         return res>0;
     }
+
+    /**
+     * 根据username 获取信息
+     *
+     * @param user 存储用户名的封装对象
+     * @return 用户信息
+     */
+    @Override
+    public User getUserByUserName(User user) {
+        String sql="select * from bs_users where username=?";
+        return this.getBean(sql,user.getUsername());
+    }
 }

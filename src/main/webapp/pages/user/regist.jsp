@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8"  pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,28 +6,33 @@
 		<title>尚硅谷会员注册页面</title>
 		<%@include file="/include/base.jsp"%>
 		<script type="text/javascript">
+			function checkoutUserName(username){
+				//2 创建正则表达式对象
+				const usernamePatt = /^\w{5,12}$/;
+				//3 使用test方法验证
+
+				return usernamePatt.test(username);
+			}
 			// 页面加载完成之后
 			$(function () {
+				const msgbar=$("span.errorMsg");
 				// 给注册绑定单击事件
 				$("#sub_btn").click(function () {
 					// 验证用户名：必须由字母，数字下划线组成，并且长度为5到12位
 					//1 获取用户名输入框里的内容
-					var usernameText = $("#username").val();
-					//2 创建正则表达式对象
-					var usernamePatt = /^\w{5,12}$/;
-					//3 使用test方法验证
-					if (!usernamePatt.test(usernameText)) {
-						//4 提示用户结果
-						$("span.errorMsg").text("用户名不合法！");
+					const usernameText = $("#username").val();
 
+					if(!checkoutUserName(usernameText)){
+						//4 提示用户结果
+						msgbar.text("用户名不合法！");
 						return false;
 					}
 
 					// 验证密码：必须由字母，数字下划线组成，并且长度为5到12位
 					//1 获取用户名输入框里的内容
-					var passwordText = $("#password").val();
+					const passwordText = $("#password").val();
 					//2 创建正则表达式对象
-					var passwordPatt = /^\w{5,12}$/;
+					const passwordPatt = /^\w{5,12}$/;
 					//3 使用test方法验证
 					if (!passwordPatt.test(passwordText)) {
 						//4 提示用户结果
@@ -38,30 +43,30 @@
 
 					// 验证确认密码：和密码相同
 					//1 获取确认密码内容
-					var repwdText = $("#repwd").val();
-					//2 和密码相比较
-					if (repwdText != passwordText) {
-						//3 提示用户
-						$("span.errorMsg").text("确认密码和密码不一致！");
+					const repwdText = $("#repwd").val();
+						//2 和密码相比较
+						if (repwdText !== passwordText) {
+							//3 提示用户
+							$("span.errorMsg").text("确认密码和密码不一致！");
 
-						return false;
-					}
+							return false;
+						}
 
-					// 邮箱验证：xxxxx@xxx.com
-					//1 获取邮箱里的内容
-					var emailText = $("#email").val();
-					//2 创建正则表达式对象
-					var emailPatt = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/;
-					//3 使用test方法验证是否合法
-					if (!emailPatt.test(emailText)) {
-						//4 提示用户
+						// 邮箱验证：xxxxx@xxx.com
+						//1 获取邮箱里的内容
+						const emailText = $("#email").val();
+						//2 创建正则表达式对象
+						const emailPatt = /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/;
+						//3 使用test方法验证是否合法
+						if (!emailPatt.test(emailText)) {
+							//4 提示用户
 						$("span.errorMsg").text("邮箱格式不合法！");
 
 						return false;
 					}
 
 					// 验证码：现在只需要验证用户已输入。因为还没讲到服务器。验证码生成。
-					var codeText = $("#code").val();
+					let codeText = $("#code").val();
 
 					//去掉验证码前后空格
 					// alert("去空格前：["+codeText+"]")
@@ -76,13 +81,28 @@
 					}
 
 					// 去掉错误信息
-					$("span.errorMsg").text("");
+					msgbar.text("");
 
 				});
 
 				$("img.code").click(function () {
 					//防止浏览器认为是同一资源使用缓存，因此使用随机数参数来防止读取缓存
 					$(this).prop("src","/code.jpg?random=" + Math.random());
+				});
+
+				$(".itxt[name='username']").blur(function () {
+					//获取username
+					const username=$(this).val();
+					//验证是否合法
+					if(!checkoutUserName(username)){
+						$("span.errorMsg").text("用户名不合法！");
+						return false;
+					}
+
+					//向服务器发送用户名
+					$.get("userservlet?method=checkuser&username="+username,function (data) {
+						$("span.errorMsg").text(data);
+					})
 				})
 			});
 
@@ -120,28 +140,28 @@
 								<form action="userservlet" method="post">
 									<!--get方法会覆盖?后的参数，所以为了保险起见，一般用隐藏的表单信息提交方法-->
 									<input type="hidden" name="method" value="regist">
-									<label>用户名称：</label>
+									<label for="username">用户名称：</label>
 									<input class="itxt" type="text" placeholder="请输入用户名"
 										   autocomplete="off" tabindex="1" name="username" id="username" value="${param.username}" />
 									<br />
 									<br />
-									<label>用户密码：</label>
+									<label for="password">用户密码：</label>
 									<input class="itxt" type="password" placeholder="请输入密码"
 										   autocomplete="off" tabindex="1" name="password" id="password" />
 									<br />
 									<br />
-									<label>确认密码：</label>
+									<label for="repwd">确认密码：</label>
 									<input class="itxt" type="password" placeholder="确认密码"
 										   autocomplete="off" tabindex="1" name="repwd" id="repwd" />
 									<br />
 									<br />
-									<label>电子邮件：</label>
+									<label for="email">电子邮件：</label>
 									<input class="itxt" type="text" placeholder="请输入邮箱地址"
 										   autocomplete="off" tabindex="1" name="email" id="email" value="${param.email}"/>
 									<br />
 									<br />
 									<label for="code">验证码：</label><input class="itxt" type="text" style="width: 100px;" id="code"/>
-									<img alt="" class="code" src="/code.jpg" title="看不清，换一张" style="float: right; margin-right: 40px" width="120px" height="40">
+									<img alt="" class="code" src="${pageContext.request.contextPath}/code.jpg" title="看不清，换一张" style="float: right; margin-right: 40px" width="120px" height="40">
 									<br />
 									<br />
 									<input type="submit" value="注册" id="sub_btn" />

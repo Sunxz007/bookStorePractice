@@ -21,4 +21,11 @@ public interface UserDao{
      * @return boolean
      */
     boolean registUser(User user);
+
+    /**
+     * 根据username 获取信息
+     * @param user 封装了username的user对象
+     * @return 用户信息
+     */
+    User getUserByUserName(User user);
 }

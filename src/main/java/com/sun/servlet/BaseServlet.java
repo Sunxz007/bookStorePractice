@@ -17,6 +17,7 @@ public class BaseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //在获取数据之前设置字符编码为utf-8
         request.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
         String method=request.getParameter("method");
         /* System.out.println(method);
         if ("regist".equals(method)){

@@ -19,4 +19,16 @@ public class UserServiceImpl implements UserService {
     public boolean register(User user) {
         return ud.registUser(user);
     }
+
+    /**
+     * 根据username验证用户是否存在
+     *
+     * @param user 封装了username的user对象
+     * @return 是否登录存在
+     */
+    @Override
+    public boolean checkUser(User user) {
+        User res=ud.getUserByUserName(user);
+        return res==null;
+    }
 }

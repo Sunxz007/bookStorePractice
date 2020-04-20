@@ -19,6 +19,11 @@ public class TransactionFilter implements Filter {
     }
 
     @Override
+    public void init(FilterConfig filterConfig)  {
+
+    }
+
+    @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException {
         //拿到当前线程的连接
         Connection connection = JdbcUtils.getConnection();

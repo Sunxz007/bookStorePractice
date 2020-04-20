@@ -100,12 +100,30 @@ public class UserServlet extends BaseServlet {
     }
 
 
-    protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void logout(HttpServletRequest request, HttpServletResponse response) throws  IOException{
         HttpSession session=request.getSession();
         //销毁session
         session.invalidate();
         //点击登出后返回商城首页
         response.sendRedirect(request.getContextPath()+"/index.jsp");
 
+    }
+
+    /**
+     * 检查用户名是否可用
+     *
+     */
+    protected void checkuser(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        //获取username
+        User user=WebUtils.param2bean2(request,new User());
+
+        boolean b=us.checkUser(user);
+
+        if(b){
+            //可以注册
+            response.getWriter().write("用户名可以注册");
+        }else{
+            response.getWriter().write("用户名不可用");
+        }
     }
 }
