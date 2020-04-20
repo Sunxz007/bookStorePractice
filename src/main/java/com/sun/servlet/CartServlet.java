@@ -3,6 +3,7 @@ package com.sun.servlet;
 import com.google.gson.Gson;
 import com.sun.bean.Book;
 import com.sun.bean.Cart;
+import com.sun.bean.CartItem;
 import com.sun.service.BookService;
 import com.sun.service.impl.BookServiceImpl;
 import com.sun.utils.WebUtils;
@@ -112,8 +113,23 @@ public class CartServlet extends BaseServlet {
         //获取修改后的数量count参数
         String count=request.getParameter("count");
         cart.updateCount(id,count);
-        String path=request.getHeader("referer");
-        response.sendRedirect(path);
+
+        //修改后的总数
+        int totalCount=cart.getTotalCount();
+        //购物车总价
+        double totalPrice = cart.getTotalPrice();
+        //被修改的购物车项
+        CartItem cartItem=cart.getCartItem(id);
+        double cartItemTotalPrice = cartItem.getTotalPrice();
+        Map<String,Object> map=new HashMap<>(4);
+        //封装数据
+        map.put("totalCount",totalCount);
+        map.put("totalPrice",totalPrice);
+        map.put("itemTotalPrice",cartItemTotalPrice);
+
+        Gson gson=new Gson();
+        String json = gson.toJson(map);
+        response.getWriter().write(json);
     }
 
     /**

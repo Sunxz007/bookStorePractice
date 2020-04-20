@@ -26,10 +26,15 @@
 					$(this).val(1);
 					return false;
 				}
-				window.location.href="/client/CartServlet?method=update&id="+id+"&count="+value;
-			});
-		})
-	</script>
+				console.log("/client/CartServlet?method=update&id=" + id +"&count="+value);
+				$.getJSON("/client/CartServlet?method=update&id=" + id +"&count="+value,function (data) {
+					$(".b_count").text(data.totalCount);
+					$(".b_price").text(data.totalPrice);
+					$("#t_price_"+id).text(data.itemTotalPrice);
+})
+});
+})
+</script>
 </head>
 <body>
 	
@@ -65,7 +70,7 @@
 						<input bookid="${item.book.id}" class="itemTotalCount" type="number" value="${item.count}" style="width: 30px">
 					</label></td>
 					<td>${item.book.price}</td>
-					<td>${item.totalPrice}</td>
+					<td id="t_price_${item.book.id}">${item.totalPrice}</td>
 					<td><a class="delete" href="client/CartServlet?method=delete&id=${item.book.id}">删除</a></td>
 				</tr>
 			</c:forEach>

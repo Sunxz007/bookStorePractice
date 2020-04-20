@@ -125,6 +125,18 @@ public class Cart implements Serializable {
         //清空map
         items.clear();
     }
+
+    /**
+     * 根据id获取购物车项
+     * @param bookId book的id
+     * @return 购物车项
+     */
+    public CartItem getCartItem(String bookId){
+        int id=Integer.parseInt(bookId);
+        return items.get(id);
+    }
+
+
     @Override
     public String toString() {
         return "Cart{" +
